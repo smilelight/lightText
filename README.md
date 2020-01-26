@@ -5,6 +5,17 @@
 
 1. 新词发现
 
+## 安装
+
+```bash
+pip install lightText
+```
+建议使用国内源来安装，如使用以下命令：
+
+```bash
+pip install -i https://pypi.douban.com/simple/ lightText
+```
+
 ## 使用
 
 ### 1.新词发现
