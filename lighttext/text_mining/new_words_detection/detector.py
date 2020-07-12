@@ -2,11 +2,15 @@ import math
 import gc
 from collections import defaultdict
 
-from .utils import gen_ngram, get_stopwords, load_data, load_dictionary, return_zero
+from .utils import gen_ngram, get_stopwords, load_data, load_dictionary, return_zero, get_post_list, get_pre_list, \
+    get_ban_list
 
 DEFAULT_DICT = load_dictionary()
 DEFAULT_UNI_SUM = sum([x[0] for x in DEFAULT_DICT.values()])
 DEFAULT_STOP_WORDS = get_stopwords()
+pre_list = get_pre_list()
+post_list = get_post_list()
+ban_list = get_ban_list()
 
 
 class WordNode:
@@ -189,7 +193,7 @@ class NewWordDetector:
                 descendant.compute_entropy()
         self._entropy = True
 
-    def get_top_k(self, k=5, debug=False):
+    def get_top_k(self, k=5, debug=False, threshold=0.1):
         if not self._pmi:
             self.count_pmi()
         if not self._entropy:
@@ -210,6 +214,8 @@ class NewWordDetector:
                 }
         result = {word: info for word, info in result.items() if self.filter_word(word)}
         result = sorted(result.items(), key=lambda x: x[1]['score'], reverse=True)
+        if threshold:
+            result = [x for x in result if x[1]['score'] >= threshold]
         if debug:
             return result[:k]
         return [(x[0], x[1]['score']) for x in result][:k]
@@ -218,13 +224,16 @@ class NewWordDetector:
         words = word.split('_')
 
         if self._dictionary:
-            # 具体词性说明详见[fxsjy/jieba: 结巴中文分词](https://github.com/fxsjy/jieba)
-
-            # 过滤掉'称为_自然语言'这种动词在最前面的情况
             if words[0] in self._dictionary and self._dictionary[words[0]][1] in \
-                    ['vd', 'vn', 'p', 'f', 'c', 'd', 'u', 't']:
+                    pre_list:
                 return False
-            # 过滤掉'人机_间'
-            if words[-1] in self._dictionary and self._dictionary[words[-1]][1] in ['f', 'c', 'd', 'u']:
+            if words[-1] in self._dictionary and self._dictionary[words[-1]][1] in post_list:
                 return False
+            if words[0] not in self._dictionary and len(words[0]) > 2:  # 禁止造词，和jieba分出词典外的词
+                return False
+            if words[1] not in self._dictionary and len(words[1]) > 2:  # 禁止造词，和jieba分出词典外的词
+                return False
+            for word in words:
+                if word in ban_list:
+                    return False
         return True

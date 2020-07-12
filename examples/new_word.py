@@ -1,7 +1,6 @@
-from pprint import pprint
-
 from lighttext import NewWordDetector
 
-detector = NewWordDetector()
-detector.load_file('new_word/test_new_word3.txt')
-pprint(detector.get_top_k(10))
+if __name__ == '__main__':
+    detector = NewWordDetector()
+    detector.load_file('new_word/test_new_word3.txt')
+    print(detector.get_top_k(5))

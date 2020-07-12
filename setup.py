@@ -9,7 +9,7 @@ with open('./requirements.txt', 'r', encoding='utf8') as f:
 
 setup(
     name='lightText',
-    version='0.0.2',
+    version='0.1.0',
     description= "lightsmile's text library",
     author='lightsmile',
     author_email='iamlightsmile@gmail.com',
