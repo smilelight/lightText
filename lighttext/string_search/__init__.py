@@ -4,5 +4,6 @@
 # @Software: PyCharm
 
 from .keyword import KeywordProcessor
+from .ner import NER
 
-__all__ = ['KeywordProcessor']
+__all__ = ['KeywordProcessor', 'NER']

@@ -1,6 +1,9 @@
 from distutils.core import setup
 import setuptools
 
+with open('./version.txt', 'r', encoding='utf8') as f:
+    version = f.read()
+
 with open('./README.md', 'r', encoding='utf8') as f:
     long_description = f.read()
 
@@ -9,14 +12,15 @@ with open('./requirements.txt', 'r', encoding='utf8') as f:
 
 setup(
     name='lightText',
-    version='0.1.0',
-    description= "lightsmile's text library",
+    version=version,
+    description="lightsmile's text library",
     author='lightsmile',
     author_email='iamlightsmile@gmail.com',
     url='https://github.com/smilelight/lightText',
     packages=setuptools.find_packages(),
     install_requires=install_requires,
     long_description=long_description,
+    include_package_data=True,
     long_description_content_type='text/markdown',
     license='Apache-2.0',
     classifiers=[

@@ -66,13 +66,13 @@ if __name__ == '__main__':
     kp.add_keyword("司马")
     stn = "曹操、曹丕和司马懿一起去吃大盘鸡。"
 
-    print(kp.extract_keyword_sequence(stn))
+    print(kp.extract_keywords(stn))
 ```
 
 #### 运行结果
 
 ```text
-[('曹操', 0, 2), ('曹丕', 3, 5), ('司马懿', 6, 9)]
+['曹操', '曹丕', '司马懿']
 ```
 
 ## 参考

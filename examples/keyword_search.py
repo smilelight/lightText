@@ -14,4 +14,4 @@ if __name__ == '__main__':
     kp.add_keyword("司马")
     stn = "曹操、曹丕和司马懿一起去吃大盘鸡。"
 
-    print(kp.extract_keyword_sequence(stn))
+    print(kp.extract_keywords(stn))
