@@ -48,10 +48,12 @@ class NER:
         for word in tqdm(file_data):
             self._type_dict[word] = type_name
 
-    def build_from_dir(self, file_dir):
+    def build_from_dir(self, file_dir, type_name: str = None):
         for file_path in os.listdir(file_dir):
             file_full_path = os.path.join(file_dir, file_path)
             file_name = get_file_name(file_full_path)
+            if not type_name:
+                type_name = file_name
             if file_path.endswith('csv'):
                 file_data = []
                 with open(file_full_path, encoding='utf8') as file:
@@ -66,7 +68,7 @@ class NER:
             logger.info("正在从{}中导入词表，共计{}条数据".format(file_path, len(file_data)))
             self._kp.add_keywords_from_list(file_data)
             for word in tqdm(file_data):
-                self._type_dict[word] = file_name
+                self._type_dict[word] = type_name
 
     def save(self, save_path: str = 'ner.pt'):
         logger.info("将模型保存至{}中".format(save_path))
