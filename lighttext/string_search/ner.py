@@ -19,18 +19,22 @@ class NER:
         self._kp = KeywordProcessor()
         self._type_dict = defaultdict(default_type)
 
-    def build_from_txt(self, file_path: str):
+    def build_from_txt(self, file_path: str, type_name: str = None):
         check_file(file_path, 'txt')
         file_name = get_file_name(file_path)
+        if not type_name:
+            type_name = file_name
         file_data = open(file_path, encoding='utf8').read().split('\n')
         logger.info("正在从{}中导入词表，共计{}条数据".format(file_path, len(file_data)))
         self._kp.add_keywords_from_list(file_data)
         for word in tqdm(file_data):
-            self._type_dict[word] = file_name
+            self._type_dict[word] = type_name
 
-    def build_from_csv(self, file_path: str, column: int):
+    def build_from_csv(self, file_path: str, column: int, type_name: str = None):
         check_file(file_path, 'csv')
         file_name = get_file_name(file_path)
+        if not type_name:
+            type_name = file_name
         file_data = []
         with open(file_path, encoding='utf8') as file:
             csv_reader = csv.reader(file)
@@ -42,7 +46,7 @@ class NER:
         logger.info("正在从{}中导入词表，共计{}条数据".format(file_path, len(file_data)))
         self._kp.add_keywords_from_list(file_data)
         for word in tqdm(file_data):
-            self._type_dict[word] = file_name
+            self._type_dict[word] = type_name
 
     def build_from_dir(self, file_dir):
         for file_path in os.listdir(file_dir):
