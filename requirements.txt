@@ -1,3 +1,6 @@
 lightUtils>=0.1.10.0
 tqdm>=4.28.1
 jieba>=0.39
+fuzzywuzzy
+python-Levenshtein
+gensim
