@@ -10,6 +10,8 @@ lightText.egg-info
 
 # test
 test/_trial_temp
+test/sim.bin
+test/saves
 
 # scripts
 scripts

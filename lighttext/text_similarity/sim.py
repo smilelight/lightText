@@ -27,7 +27,6 @@ type_dict = {
 }
 
 
-
 def tokenize(text: str) -> List[str]:
     # {标点符号、连词、助词、副词、介词、时语素、‘的’、数词、方位词、代词}
     # {'x', 'c', 'u', 'd', 'p', 't', 'uj', 'm', 'f', 'r'}
@@ -38,7 +37,7 @@ def tokenize(text: str) -> List[str]:
 
 
 class SimModel:
-    def __init__(self, model_type: str = 'lda', token_fn: Callable=tokenize, split_fn: Callable=split_sentence):
+    def __init__(self, model_type: str = 'lda', token_fn: Callable = tokenize, split_fn: Callable = split_sentence):
         if model_type not in type_dict:
             raise Exception('undefined model_type: {}, must be one of {}'.format(model_type, list(type_dict.keys())))
         self._model_type = model_type
@@ -50,7 +49,7 @@ class SimModel:
             'lsi': None,
             'lda': None
         }
-        self._mtx: similarities.MatrixSimilarity = None,
+        self._mtx: similarities.MatrixSimilarity = None
         self._documents: List[str] = []
 
     @property
@@ -171,7 +170,6 @@ class SimModel:
                 documents.extend(self._split_fn(line))
         self.build_from_documents(documents)
 
-
     def process(self, text: str, documents: List[str]):
         vec = self._dic.doc2bow(self._token_fn(text))
         model = self._models[self._model_type]
@@ -223,11 +221,3 @@ class SimModel:
         with open(path, 'rb') as f:
             model = pickle.load(f)
             return model
-
-
-
-
-
-
-
-

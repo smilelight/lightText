@@ -18,7 +18,7 @@ if __name__ == '__main__':
     path = "sim.bin"
     doc_path = "doc.txt"
 
-    model = SimModel(model_type='lda')
+    model = SimModel(model_type='lsi')
 
     # 从documents中初始化模型
     # model.build_from_documents(documents)
