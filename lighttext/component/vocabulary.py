@@ -5,6 +5,9 @@ from lightutils import logger
 
 
 class Vocabulary:
+    """
+    词汇表结构，做word和id之间的映射
+    """
     def __init__(self, padding: str = '<pad>', unknown: str = '<unk>'):
         self._word2idx: Dict = dict()
         self._idx2word: Dict = dict()
@@ -43,7 +46,6 @@ class Vocabulary:
         if idx not in self._idx2word:
             self._idx2word[idx] = word
 
-
     def update(self, word_lst: List[str]):
         for word in word_lst:
             self.add_word(word)
@@ -65,7 +67,9 @@ class Vocabulary:
 
     def __getitem__(self, item):
         return self._word2idx[item]
-        
+
+    def __str__(self):
+        return str(self._word2idx)
 
     @property
     def word2idx(self):
